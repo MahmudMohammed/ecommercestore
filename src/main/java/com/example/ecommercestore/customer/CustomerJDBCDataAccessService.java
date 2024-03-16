@@ -40,7 +40,13 @@ public class CustomerJDBCDataAccessService implements CustomerDAO{
 
     @Override
     public boolean existPersonWithEmail(String email) {
-        return false;
+        var sql = """
+                SELECT count(id) 
+                FROM customer
+                WHERE email = ?
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
     }
 
     @Override
@@ -60,12 +66,24 @@ public class CustomerJDBCDataAccessService implements CustomerDAO{
 
     @Override
     public boolean existPersonById(Integer id) {
-        return false;
+        var sql = """
+                SELECT count(id) 
+                FROM customer
+                WHERE id = ?
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+        return count != null && count > 0;
+
     }
 
     @Override
     public void deleteCustomerById(Integer id) {
-
+        var sql = """
+                DELETE FROM customer
+                WHERE id = ?
+                """;
+        int update = jdbcTemplate.update(sql, id);
+        System.out.println("deleted customer by id " + update);
     }
 
     @Override
