@@ -4,29 +4,37 @@ package com.example.ecommercestore.customer;
 import jakarta.persistence.*;
 
 @Entity
+@Table(
+        name = "customer",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "customer_email_unique",
+                        columnNames = "email"
+                )
+        }
+)
 public class Customer {
 
     @Id
     @SequenceGenerator(
-            name = "customer_id_sequence",
-            sequenceName = "customer_id_sequence"
+            name = "customer_id_seq",
+            sequenceName = "customer_id_seq",
+            allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "customer_id_sequence"
+            generator = "customer_id_seq"
     )
     private Integer id;
 
 
     @Column(
-            name = "name",
             nullable = false
     )
     private String name;
 
 
     @Column(
-            name = "email",
             nullable = false
     )
     private String email;
@@ -35,7 +43,6 @@ public class Customer {
 
 
     @Column(
-            name = "age",
             nullable = false
     )
     private Integer age;

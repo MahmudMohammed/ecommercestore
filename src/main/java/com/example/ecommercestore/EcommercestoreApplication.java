@@ -2,12 +2,14 @@ package com.example.ecommercestore;
 
 import com.example.ecommercestore.customer.Customer;
 import com.example.ecommercestore.customer.CustomerRepository;
+import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.List;
+import java.util.Random;
 
 @SpringBootApplication
 public class EcommercestoreApplication {
@@ -18,11 +20,16 @@ public class EcommercestoreApplication {
 	@Bean
 	CommandLineRunner runner(CustomerRepository customerRepository){
 		return args -> {
-			Customer alex = new Customer(1, "Alex", "alex@gmail.com", 21);
-			Customer john = new Customer(2, "John", "john@gmail.com", 22);
+			var faker = new Faker();
+			Random random = new Random();
+			Customer customer = new Customer(
+					faker.name().fullName(),
+					faker.internet().emailAddress(),
+					random.nextInt(16 , 99)
+			);
 
-			List<Customer> customers = List.of(alex,john);
-			//customerRepository.saveAll(customers);
+
+			customerRepository.save(customer);
 		};
 	}
 

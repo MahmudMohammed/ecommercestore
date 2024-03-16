@@ -3,6 +3,7 @@ package com.example.ecommercestore.customer;
 import com.example.ecommercestore.exception.DuplicateResourceException;
 import com.example.ecommercestore.exception.RequestValidationException;
 import com.example.ecommercestore.exception.ResourceNotFound;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class CustomerService {
 
     private final CustomerDAO customerDao;
 
-    public CustomerService(CustomerDAO customerDao) {
+    public CustomerService(@Qualifier("jdbc") CustomerDAO customerDao) {
         this.customerDao = customerDao;
     }
 
